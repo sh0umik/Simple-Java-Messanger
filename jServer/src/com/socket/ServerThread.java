@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,6 +25,8 @@ class ServerThread extends Thread {
     public ObjectInputStream streamIn  =  null;
     public ObjectOutputStream streamOut = null;
     public ServerFrame ui;
+    
+    
 
     public ServerThread(SocketServer _server, Socket _socket){  
     	super();
@@ -36,6 +40,7 @@ class ServerThread extends Thread {
         try {
             streamOut.writeObject(msg);
             streamOut.flush();
+            
         } 
         catch (IOException ex) {
             System.out.println("Exception [SocketClient : send(...)]");

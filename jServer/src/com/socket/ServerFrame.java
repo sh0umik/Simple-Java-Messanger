@@ -11,7 +11,7 @@ public class ServerFrame extends javax.swing.JFrame {
 
     public SocketServer server;
     public Thread serverThread;
-    public String filePath = "D:/Data.xml";
+    public String filePath = "./Data.xml";
     public JFileChooser fileChooser;
     
     public ServerFrame() {
@@ -42,7 +42,6 @@ public class ServerFrame extends javax.swing.JFrame {
         setTitle("jServer");
 
         startServer.setText("Start Server");
-        startServer.setEnabled(false);
         startServer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startServerActionPerformed(evt);

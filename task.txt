@@ -1,0 +1,5 @@
+If no one in the server then the sigle user wont be able to send message 
+
+Multiple device/Frame login syncronization through file read write 
+
+

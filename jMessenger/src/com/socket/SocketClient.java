@@ -3,9 +3,15 @@ package com.socket;
 import java.io.*;
 import java.net.*;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class SocketClient implements Runnable{
     
@@ -15,6 +21,9 @@ public class SocketClient implements Runnable{
     public ChatFrame ui;
     public ObjectInputStream In;
     public ObjectOutputStream Out;
+    
+    JSONParser parser;
+    JSONArray a;
     
     public SocketClient(ChatFrame frame) throws IOException{
         ui = frame; 
@@ -26,13 +35,18 @@ public class SocketClient implements Runnable{
         Out.flush();
         In = new ObjectInputStream(socket.getInputStream());
         
+        parser = new JSONParser();
+        
     }
 
     @Override
     public void run() {
+        
         boolean keepRunning = true;
         while(keepRunning){
             try {
+   
+                
                 Message msg = (Message) In.readObject();
                 System.out.println("Incoming : "+msg.toString());
                 
@@ -57,6 +71,27 @@ public class SocketClient implements Runnable{
                     if(msg.content.equals("TRUE")){
                         ui.loginBtn.setEnabled(false); ui.signBtn.setEnabled(false);                        
                         ui.output.append("[SERVER > Me] : Login Successful\n");
+                        
+                        a = (JSONArray) parser.parse(new FileReader("/home/fahim/Projects/Java/Simple-Java-Messanger-/jServer/"+ui.username+"-chat-history.json"));
+                        
+                        ui.output.append("----- OLD MESSAGES -----\n");
+                        // load the history
+                        for (Object o : a) {
+                            JSONObject message = (JSONObject) o;
+                            
+                            String person = (String) message.get("sender");
+                            String content = (String) message.get("content");
+                            String whom = (String) message.get("reception");
+                            
+                            if (whom.equals(ui.username)) {
+                                ui.output.append("["+person+" > Me] : "+content+"\n");
+                            }else{
+                                ui.output.append("["+person+" > "+whom+"] : "+content+"\n");
+                            }
+                        }
+                        
+                        ui.output.append("----- END -----\n");
+                        
                         ui.userField.setEnabled(false); ui.passField.setEnabled(false);
                     }
                     else{
@@ -136,6 +171,7 @@ public class SocketClient implements Runnable{
             }
             catch(Exception ex) {
                 keepRunning = false;
+                System.out.println(ex);
                 ui.output.append("[Application > Me] : Connection Failure\n");
                 ui.cntBtn.setEnabled(true); ui.addressField.setEditable(true); ui.portField.setEditable(true);
                 

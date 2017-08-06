@@ -11,6 +11,9 @@ public class SocketServer implements Runnable {
     public int clientCount = 0, port = 13000;
     public ServerFrame ui;
     public Database db;
+    
+    public History history;
+   
 
     public SocketServer(ServerFrame frame){
        
@@ -19,6 +22,9 @@ public class SocketServer implements Runnable {
         db = new Database(ui.filePath);
         
 	try{  
+            
+            history = new History();
+            
 	    server = new ServerSocket(port);
             port = server.getLocalPort();
 	    ui.serverLog.append("Server startet. IP : " + InetAddress.getLocalHost() + ", Port : " + server.getLocalPort());
@@ -30,7 +36,7 @@ public class SocketServer implements Runnable {
 	}
     }
     
-    // Extra
+    // Extra not used
     
     public SocketServer(ServerFrame frame, int Port){
        
@@ -87,7 +93,7 @@ public class SocketServer implements Runnable {
 	return -1;
     }
 	
-    public synchronized void handle(int ID, Message msg){  
+    public synchronized void handle(int ID, Message msg) throws IOException{  
 	if (msg.content.equals(".bye")){
             Announce("signout", "SERVER", msg.sender);
             remove(ID); 
@@ -116,6 +122,9 @@ public class SocketServer implements Runnable {
                 else{
                     findUserThread(msg.recipient).send(new Message(msg.type, msg.sender, msg.content, msg.recipient));
                     clients[findClient(ID)].send(new Message(msg.type, msg.sender, msg.content, msg.recipient));
+                    
+                    // store to db
+                    history.writeHistory(new Message(msg.type, msg.sender, msg.content, msg.recipient));
                 }
             }
             else if(msg.type.equals("test")){

@@ -11,7 +11,7 @@ import org.w3c.dom.*;
 
 public class Database {
     
-    public String filePath;
+    public String filePath = "/home/fahim/Projects/Java/Simple-Java-Messanger-/Data.xml";
     
     public Database(String filePath){
         this.filePath = filePath;

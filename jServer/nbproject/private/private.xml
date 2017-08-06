@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/lenovo/NetBeansProjects/jServer/src/com/socket/Message.java</file>
-            <file>file:/home/lenovo/NetBeansProjects/jServer/src/com/socket/SocketServer.java</file>
-            <file>file:/home/lenovo/NetBeansProjects/jServer/src/com/socket/ServerFrame.java</file>
-            <file>file:/home/lenovo/NetBeansProjects/jServer/src/com/socket/ServerThread.java</file>
-            <file>file:/home/lenovo/NetBeansProjects/jServer/src/com/socket/Database.java</file>
+            <file>file:/home/fahim/Projects/Java/Simple-Java-Messanger-/jServer/src/com/socket/History.java</file>
+            <file>file:/home/fahim/Projects/Java/Simple-Java-Messanger-/jServer/src/com/socket/ServerThread.java</file>
+            <file>file:/home/fahim/Projects/Java/Simple-Java-Messanger-/jServer/src/com/socket/Message.java</file>
+            <file>file:/home/fahim/Projects/Java/Simple-Java-Messanger-/jServer/src/com/socket/SocketServer.java</file>
         </group>
     </open-files>
 </project-private>
